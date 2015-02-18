@@ -14,8 +14,6 @@ module.exports = React.createClass({displayName: "TodoItem",
     handleEdit: function(){
         var node = this.refs.editField.getDOMNode();
         this.props.editing = true;
-//        this.props.item;
-        console.log('edit', this.props.item.name)
         this.setState({editing: true}, function(){
             node.focus();
             node.setSelectionRange(node.value.length, node.value.length);
@@ -26,11 +24,9 @@ module.exports = React.createClass({displayName: "TodoItem",
             return;
         }
         var newValue = this.refs.editField.getDOMNode().value;
-        if(this.props.item.name != newValue){
-            console.log('updating')
+        if(this.props.item.name !== newValue){
             this.props.onUpdate(this.props.item, newValue);
         }else{
-            console.log('not updating')
             this.cancelEdit();
         }
     },
