@@ -5,9 +5,6 @@ var Model = require('./Model');
 var DOM = React.DOM;
 
 var TodoApp = React.createClass({displayName: "TodoApp",
-    getName: function(){
-        return 'TodoApp'
-    },
     getInitialState: function () {
         var model = new Model();
         model.add("do something!");
@@ -26,13 +23,19 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         this.state.todos.remove(item);
         this.setState(this.state);
     },
+    onUpdate: function(item, newValue){
+        // update item
+        item.name = newValue;
+        this.setState(this.state);
+    },
     render: function() {
         return DOM.div(null,
             Header({addTodo: this.addTodo}),
             TodoList({
                 todos: this.state.todos,
                 onToggle: this.onToggle,
-                onDestroy: this.onDestroy
+                onDestroy: this.onDestroy,
+                onUpdate: this.onUpdate,
             })
         );
 

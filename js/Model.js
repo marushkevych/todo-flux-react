@@ -1,9 +1,11 @@
+var uuid = require('node-uuid');
+
 var Model = module.exports = function(){
     var todos = [];
     return {
         add: function(todo){
             todos.push({
-                id: todos.length,
+                id: uuid.v1(),
                 name: todo,
                 completed: false
             });
@@ -17,5 +19,4 @@ var Model = module.exports = function(){
             });
         }
     };
-}
-
+};
