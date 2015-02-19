@@ -18,18 +18,12 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         this.state.todos.remove(item);
         this.setState(this.state);
     },
-    onUpdate: function(item, newValue){
-        // update item
-        item.name = newValue;
-        this.setState(this.state);
-    },
     render: function() {
         return DOM.div(null,
             Header({addTodo: this.addTodo}),
             TodoList({
                 todos: this.state.todos,
                 onDestroy: this.onDestroy,
-                onUpdate: this.onUpdate,
             })
         );
 

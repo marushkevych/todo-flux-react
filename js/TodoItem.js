@@ -26,7 +26,9 @@ module.exports = React.createClass({displayName: "TodoItem",
         }
         var newValue = this.refs.editField.getDOMNode().value;
         if(this.props.item.name !== newValue){
-            this.props.onUpdate(this.props.item, newValue);
+            this.props.item.name = newValue;
+            this.props.editing = false;
+            this.setState(this.state);
         }else{
             this.cancelEdit();
         }
@@ -34,7 +36,7 @@ module.exports = React.createClass({displayName: "TodoItem",
     cancelEdit: function(){
         this.props.editing = false;
         this.refs.editField.getDOMNode().value = this.props.item.name;
-        this.setState({editing: false});
+        this.setState(this.state);
     },
     handleKeyDown: function (event) {
         if (event.which === ESCAPE_KEY) {
@@ -45,7 +47,7 @@ module.exports = React.createClass({displayName: "TodoItem",
     },
     getInitialState: function(){
         
-        return {editing: false};
+        return {item: this.props.item};
     },
     render: function() {
         var classes = cx({

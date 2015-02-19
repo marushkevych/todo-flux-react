@@ -26,7 +26,6 @@ var TodoList = React.createClass({displayName: "TodoList",
                     return TodoItem({
                         item: todo, 
                         onDestroy: props.onDestroy,
-                        onUpdate: props.onUpdate,
                         key: todo.id
                     });
                 })
