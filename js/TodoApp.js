@@ -19,6 +19,7 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         this.setState(this.state);
     },
     render: function() {
+        console.log('app render')
         return DOM.div(null,
             Header({addTodo: this.addTodo}),
             TodoList({

@@ -6,36 +6,36 @@ var ENTER_KEY = 13;
 
 module.exports = React.createClass({displayName: "TodoItem",
     onToggle: function(){
-        this.props.item.completed = !this.props.item.completed;
-        this.setState(this.state);
+        this.state.item.completed = !this.state.item.completed;
+        this.props.onToggle();
     },
     onDestroy: function(){
-        this.props.onDestroy(this.props.item);
+        this.props.onDestroy(this.state.item);
     },
     handleEdit: function(){
         var node = this.refs.editField.getDOMNode();
-        this.props.editing = true;
-        this.setState({editing: true}, function(){
+        this.state.editing = true;
+        this.setState(this.state, function(){
             node.focus();
             node.setSelectionRange(node.value.length, node.value.length);
         });
     },
     handleSubmit: function(){
-        if(!this.props.editing){
+        if(!this.state.editing){
             return;
         }
         var newValue = this.refs.editField.getDOMNode().value;
-        if(this.props.item.name !== newValue){
-            this.props.item.name = newValue;
-            this.props.editing = false;
+        if(this.state.item.name !== newValue){
+            this.state.item.name = newValue;
+            this.state.editing = false;
             this.setState(this.state);
         }else{
             this.cancelEdit();
         }
     },
     cancelEdit: function(){
-        this.props.editing = false;
-        this.refs.editField.getDOMNode().value = this.props.item.name;
+        this.state.editing = false;
+        this.refs.editField.getDOMNode().value = this.state.item.name;
         this.setState(this.state);
     },
     handleKeyDown: function (event) {
@@ -50,25 +50,26 @@ module.exports = React.createClass({displayName: "TodoItem",
         return {item: this.props.item};
     },
     render: function() {
+        console.log('item render')
         var classes = cx({
-            completed: this.props.item.completed,
-            editing: this.props.editing
+            completed: this.state.item.completed,
+            editing: this.state.editing
         });
         return DOM.li({className: classes},
             DOM.div({className:'view'},
                 DOM.input({
                     className:"toggle",
                     type:"checkbox",
-                    checked: this.props.item.completed,
+                    checked: this.state.item.completed,
                     onChange: this.onToggle
                 }),
-                DOM.label({onDoubleClick:this.handleEdit}, this.props.item.name),
+                DOM.label({onDoubleClick:this.handleEdit}, this.state.item.name),
                 DOM.button({className: "destroy", onClick: this.onDestroy})
             ),
             DOM.input({
                 ref:"editField",
                 className:"edit",
-                defaultValue:this.props.item.name,
+                defaultValue:this.state.item.name,
                 onBlur:this.handleSubmit,
 //                onChange:this.handleChange,
                 onKeyDown:this.handleKeyDown

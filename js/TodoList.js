@@ -3,14 +3,17 @@ var TodoItem = React.createFactory(require('./TodoItem'));
 var DOM = React.DOM;
 
 var TodoList = React.createClass({displayName: "TodoList",
+    onToggle: function(){
+        this.setState(this.state);
+    },
     toggleAll: function(event){
-        console.log(event)
         var checked = event.target.checked;
         this.props.todos.toggleAll(checked);
         this.setState({toggled: checked});
     },
     render: function() {
-        var props = this.props;
+        console.log('list render')
+        var self = this;
         if (this.props.todos.getTasks().length === 0) {
             return null;
         }
@@ -25,7 +28,8 @@ var TodoList = React.createClass({displayName: "TodoList",
                 this.props.todos.getTasks().map(function(todo){
                     return TodoItem({
                         item: todo, 
-                        onDestroy: props.onDestroy,
+                        onDestroy: self.props.onDestroy,
+                        onToggle: self.onToggle,
                         key: todo.id
                     });
                 })
