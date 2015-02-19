@@ -18,7 +18,8 @@ var Header = React.createClass({displayName: "Header",
                 id:"new-todo", 
                 ref:"newField",
                 placeholder:"What needs to be done?", 
-                onKeyDown: this.keyDown})
+                onKeyDown: this.keyDown
+            })
         );
 
     }

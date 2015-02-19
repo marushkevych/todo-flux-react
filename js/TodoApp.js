@@ -14,11 +14,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         this.state.todos.add(todo);
         this.setState(this.state);
     },
-    onToggle: function(item){
-//        console.log('tolgle', item)
-        item.completed = !item.completed;
-        this.setState(this.state);
-    },
     onDestroy: function(item){
         this.state.todos.remove(item);
         this.setState(this.state);
@@ -33,7 +28,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
             Header({addTodo: this.addTodo}),
             TodoList({
                 todos: this.state.todos,
-                onToggle: this.onToggle,
                 onDestroy: this.onDestroy,
                 onUpdate: this.onUpdate,
             })

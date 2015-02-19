@@ -6,7 +6,8 @@ var ENTER_KEY = 13;
 
 module.exports = React.createClass({displayName: "TodoItem",
     onToggle: function(){
-        this.props.onToggle(this.props.item);
+        this.props.item.completed = !this.props.item.completed;
+        this.setState(this.state);
     },
     onDestroy: function(){
         this.props.onDestroy(this.props.item);
@@ -43,6 +44,7 @@ module.exports = React.createClass({displayName: "TodoItem",
         }
     },
     getInitialState: function(){
+        
         return {editing: false};
     },
     render: function() {

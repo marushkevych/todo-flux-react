@@ -17,6 +17,18 @@ var Model = module.exports = function(){
             todos = todos.filter(function(todo){
                 return todo.id !== item.id;
             });
+        },
+        getActiveCount: function(){
+            return todos.reduce(function(count, todo){
+                return todo.completed ? count : count+=1;
+            }, 0);
+        },
+        toggleAll: function(completed){
+            console.log(completed)
+            for(var i=0; i<todos.length; i++){
+                todos[i].completed = completed;
+            }
+            
         }
     };
 };
