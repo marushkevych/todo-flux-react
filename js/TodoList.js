@@ -12,6 +12,9 @@ var TodoList = React.createClass({displayName: "TodoList",
         this.props.todos.toggleAll(checked);
         this.setState({toggled: checked});
     },
+    getInitialState: function(){
+        return {toggled: this.props.todos.getActiveCount() === 0};
+    },
     render: function() {
         console.log('list render')
         var self = this;
@@ -23,7 +26,7 @@ var TodoList = React.createClass({displayName: "TodoList",
                 id:"toggle-all",
                 type:"checkbox",
                 onChange:this.toggleAll,
-                checked:this.props.todos.getActiveCount() === 0
+                checked:this.state.toggled
             }),
             DOM.ul({id:"todo-list"},
                 this.props.todos.getTasks().map(function(todo){
