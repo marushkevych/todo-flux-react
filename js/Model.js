@@ -23,11 +23,13 @@ var Model = module.exports = function(){
                 return todo.completed ? count : count+=1;
             }, 0);
         },
+        toggle: function(item){
+            item.completed = !item.completed;
+        },
         toggleAll: function(completed){
-            console.log(completed)
-            for(var i=0; i<todos.length; i++){
-                todos[i].completed = completed;
-            }
+            todos.forEach(function(todo){
+                todo.completed = completed;
+            });
             
         }
     };

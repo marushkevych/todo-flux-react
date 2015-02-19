@@ -3,8 +3,9 @@ var TodoItem = React.createFactory(require('./TodoItem'));
 var DOM = React.DOM;
 
 var TodoList = React.createClass({displayName: "TodoList",
-    onToggle: function(){
-        this.setState(this.state);
+    onToggle: function(item){
+        this.props.todos.toggle(item);
+        this.setState({toggled: this.props.todos.getActiveCount() === 0});
     },
     toggleAll: function(event){
         var checked = event.target.checked;
