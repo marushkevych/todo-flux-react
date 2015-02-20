@@ -1,4 +1,5 @@
 var TodoItem = React.createFactory(require('./TodoItem'));
+var Footer = React.createFactory(require('./Footer'));
 
 var DOM = React.DOM;
 
@@ -21,26 +22,27 @@ var TodoList = React.createClass({displayName: "TodoList",
         if (this.props.todos.getTasks().length === 0) {
             return null;
         }
-        return DOM.section({id:'main'},
-            DOM.input({
-                id:"toggle-all",
-                type:"checkbox",
-                onChange:this.toggleAll,
-                checked:this.state.toggled
-            }),
-            DOM.ul({id:"todo-list"},
-                this.props.todos.getTasks().map(function(todo){
-                    return TodoItem({
-                        item: todo, 
-                        onDestroy: self.props.onDestroy,
-                        onToggle: self.onToggle,
-                        key: todo.id
-                    });
-                })
+        return DOM.div(null,
+            DOM.section({id:'main'},
+                DOM.input({
+                    id:"toggle-all",
+                    type:"checkbox",
+                    onChange:this.toggleAll,
+                    checked:this.state.toggled
+                }),
+                DOM.ul({id:"todo-list"},
+                    this.props.todos.getTasks().map(function(todo){
+                        return TodoItem({
+                            item: todo, 
+                            onDestroy: self.props.onDestroy,
+                            onToggle: self.onToggle,
+                            key: todo.id
+                        });
+                    })
+                ),
+                Footer({todos: this.props.todos})
             )
         );
-
-
     }
 });
 

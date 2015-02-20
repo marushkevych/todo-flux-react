@@ -23,6 +23,11 @@ var Model = module.exports = function(){
                 return todo.completed ? count : count+=1;
             }, 0);
         },
+        getCompletedCount: function(){
+            return todos.reduce(function(count, todo){
+                return todo.completed ? count+=1 : count;
+            }, 0);
+        },
         toggle: function(item){
             item.completed = !item.completed;
         },

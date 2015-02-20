@@ -26,6 +26,7 @@ var TodoApp = React.createClass({displayName: "TodoApp",
                 todos: this.state.todos,
                 onDestroy: this.onDestroy,
             })
+            
         );
 
     }
