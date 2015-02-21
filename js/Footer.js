@@ -4,10 +4,10 @@ var DOM = React.DOM;
 
 var Footer = React.createClass({displayName: "Footer",
     render: function() {
-        var clearButton = this.props.todos.getCompletedCount() ? DOM.button({id:"clear-completed", onClick: this.props.clearCompleted}, "Clear completed" ) : null;
+        var clearButton = this.props.model.getCompletedCount() ? DOM.button({id:"clear-completed", onClick: this.props.clearCompleted}, "Clear completed" ) : null;
         return DOM.footer({id:"footer"},
             DOM.span({id:"todo-count"},
-                DOM.strong(null, getCountText(this.props.todos))
+                DOM.strong(null, getCountText(this.props.model))
             ),
             DOM.ul({id:"filters"},
                 DOM.li(null,

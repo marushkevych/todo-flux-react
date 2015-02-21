@@ -8,14 +8,14 @@ var TodoApp = React.createClass({displayName: "TodoApp",
     getInitialState: function () {
         var model = new Model();
         model.add("do something!");
-        return {todos: model};
+        return {model: model};
     },
     addTodo:function(todo){
-        this.state.todos.add(todo);
+        this.state.model.add(todo);
         this.setState(this.state);
     },
     onDestroy: function(item){
-        this.state.todos.remove(item);
+        this.state.model.remove(item);
         this.setState(this.state);
     },
     render: function() {
@@ -23,7 +23,7 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         return DOM.div(null,
             Header({addTodo: this.addTodo}),
             TodoList({
-                todos: this.state.todos,
+                model: this.state.model,
                 onDestroy: this.onDestroy,
             })
             

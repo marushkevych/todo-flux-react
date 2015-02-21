@@ -6,21 +6,21 @@ var DOM = React.DOM;
 
 var TodoList = React.createClass({displayName: "TodoList",
     onToggle: function(item){
-        this.props.todos.toggle(item);
-        this.setState({toggled: this.props.todos.getActiveCount() === 0});
+        this.props.model.toggle(item);
+        this.setState({toggled: this.props.model.getActiveCount() === 0});
     },
     toggleAll: function(event){
         var checked = event.target.checked;
-        this.props.todos.toggleAll(checked);
+        this.props.model.toggleAll(checked);
         this.setState({toggled: checked});
     },
     clearCompleted: function(){
-        this.props.todos.clearCompleted();
+        this.props.model.clearCompleted();
         this.setState({toggled: false});
     },
     getInitialState: function(){
         return {
-            toggled: this.props.todos.getActiveCount() === 0,
+            toggled: this.props.model.getActiveCount() === 0,
             filter: 'ALL'
         };
     },
@@ -52,7 +52,7 @@ var TodoList = React.createClass({displayName: "TodoList",
     render: function() {
         console.log('list render')
         var self = this;
-        if (this.props.todos.getTasks().length === 0) {
+        if (this.props.model.getTasks().length === 0) {
             return null;
         }
         return DOM.div(null,
@@ -64,7 +64,7 @@ var TodoList = React.createClass({displayName: "TodoList",
                     checked:this.state.toggled
                 }),
                 DOM.ul({id:"todo-list"},
-                    this.props.todos.getTasks().filter(this.filter).map(function(todo){
+                    this.props.model.getTasks().filter(this.filter).map(function(todo){
                         return TodoItem({
                             item: todo, 
                             onDestroy: self.props.onDestroy,
@@ -74,7 +74,7 @@ var TodoList = React.createClass({displayName: "TodoList",
                     })
                 ),
                 Footer({
-                    todos: this.props.todos,
+                    model: this.props.model,
                     clearCompleted: this.clearCompleted,
                     filter: this.state.filter
                 })
