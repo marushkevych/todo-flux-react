@@ -18,6 +18,11 @@ var Model = module.exports = function(){
                 return todo.id !== item.id;
             });
         },
+        clearCompleted: function(){
+            todos = todos.filter(function(todo){
+                return !todo.completed;
+            });
+        },
         getActiveCount: function(){
             return todos.reduce(function(count, todo){
                 return todo.completed ? count : count+=1;
