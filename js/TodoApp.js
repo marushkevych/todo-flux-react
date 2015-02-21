@@ -7,7 +7,6 @@ var DOM = React.DOM;
 var TodoApp = React.createClass({displayName: "TodoApp",
     getInitialState: function () {
         var model = new Model();
-        model.add("do something!");
         return {model: model};
     },
     addTodo:function(todo){
@@ -19,7 +18,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         this.setState(this.state);
     },
     render: function() {
-        console.log('app render')
         return DOM.div(null,
             Header({addTodo: this.addTodo}),
             TodoList({

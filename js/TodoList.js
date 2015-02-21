@@ -50,7 +50,6 @@ var TodoList = React.createClass({displayName: "TodoList",
         
     },
     render: function() {
-        console.log('list render')
         var self = this;
         if (this.props.model.getTasks().length === 0) {
             return null;

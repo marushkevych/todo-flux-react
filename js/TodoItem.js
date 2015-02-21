@@ -49,7 +49,6 @@ module.exports = React.createClass({displayName: "TodoItem",
         return {item: this.props.item};
     },
     render: function() {
-        console.log('item render')
         var classes = cx({
             completed: this.state.item.completed,
             editing: this.state.editing
