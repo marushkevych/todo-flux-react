@@ -1,3 +1,5 @@
+var Dispatcher = require('./Dispatcher');
+var ActionTypes = require('./ActionTypes');
 
 var DOM = React.DOM;
 
@@ -6,7 +8,7 @@ var Header = React.createClass({displayName: "Header",
         if(event.keyCode === 13){
             var value = this.refs.newField.getDOMNode().value;
             if(value){
-                this.props.addTodo(value);
+                Dispatcher.dispatch(ActionTypes.ADD, value);
             }
             this.refs.newField.getDOMNode().value = '';
         }

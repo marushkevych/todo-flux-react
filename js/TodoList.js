@@ -1,3 +1,7 @@
+var Dispatcher = require('./Dispatcher');
+var ActionTypes = require('./ActionTypes');
+var model = require('./Model');
+
 var TodoItem = React.createFactory(require('./TodoItem'));
 var Footer = React.createFactory(require('./Footer'));
 var Router = require('director').Router;
@@ -5,22 +9,14 @@ var Router = require('director').Router;
 var DOM = React.DOM;
 
 var TodoList = React.createClass({displayName: "TodoList",
-    onToggle: function(item){
-        this.props.model.toggle(item);
-        this.setState({toggled: this.props.model.getActiveCount() === 0});
-    },
+
     toggleAll: function(event){
         var checked = event.target.checked;
-        this.props.model.toggleAll(checked);
-        this.setState({toggled: checked});
+        Dispatcher.dispatch(ActionTypes.TOGGLE_ALL, checked);
     },
-    clearCompleted: function(){
-        this.props.model.clearCompleted();
-        this.setState({toggled: false});
-    },
+
     getInitialState: function(){
         return {
-            toggled: this.props.model.getActiveCount() === 0,
             filter: 'ALL'
         };
     },
@@ -35,8 +31,7 @@ var TodoList = React.createClass({displayName: "TodoList",
         router.init();        
     },
     setFilter: function(filter){
-        this.state.filter = filter;
-        this.setState(this.state);
+        this.setState({filter: filter});
     },
     filter: function(item){
         switch(this.state.filter ){
@@ -51,30 +46,28 @@ var TodoList = React.createClass({displayName: "TodoList",
     },
     render: function() {
         var self = this;
-        if (this.props.model.getTasks().length === 0) {
+        if (model.getTasks().length === 0) {
             return null;
         }
+        
+        var toggled = model.getActiveCount() === 0;
         return DOM.div(null,
             DOM.section({id:'main'},
                 DOM.input({
                     id:"toggle-all",
                     type:"checkbox",
                     onChange:this.toggleAll,
-                    checked:this.state.toggled
+                    checked:toggled
                 }),
                 DOM.ul({id:"todo-list"},
-                    this.props.model.getTasks().filter(this.filter).map(function(todo){
+                    model.getTasks().filter(this.filter).map(function(todo){
                         return TodoItem({
                             item: todo, 
-                            onDestroy: self.props.onDestroy,
-                            onToggle: self.onToggle,
                             key: todo.id
                         });
                     })
                 ),
                 Footer({
-                    model: this.props.model,
-                    clearCompleted: this.clearCompleted,
                     filter: this.state.filter
                 })
             )

@@ -1,30 +1,32 @@
 var Header = React.createFactory(require('./Header'));
 var TodoList = React.createFactory(require('./TodoList'));
-var Model = require('./Model');
+
+
+var model = require('./Model');
 
 var DOM = React.DOM;
 
+function getTodoState() {
+  return {
+    allTodos: model.getTasks()
+  };
+}
+
 var TodoApp = React.createClass({displayName: "TodoApp",
     getInitialState: function () {
-        var model = new Model();
-        return {model: model};
+        return getTodoState();
     },
-    addTodo:function(todo){
-        this.state.model.add(todo);
-        this.setState(this.state);
+    componentDidMount: function() {
+        model.addChangeListener(this.onChange);
     },
-    onDestroy: function(item){
-        this.state.model.remove(item);
-        this.setState(this.state);
+    onChange: function() {
+        this.setState(getTodoState());
     },
+    
     render: function() {
         return DOM.div(null,
-            Header({addTodo: this.addTodo}),
-            TodoList({
-                model: this.state.model,
-                onDestroy: this.onDestroy,
-            })
-            
+            Header(),
+            TodoList()
         );
 
     }

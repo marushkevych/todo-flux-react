@@ -1,13 +1,19 @@
+var Dispatcher = require('./Dispatcher');
+var ActionTypes = require('./ActionTypes');
+var model = require('./Model');
 
 var cx = React.addons.classSet;
 var DOM = React.DOM;
 
 var Footer = React.createClass({displayName: "Footer",
+    clearCompleted: function(){
+        Dispatcher.dispatch(ActionTypes.CLEAR);
+    },
     render: function() {
-        var clearButton = this.props.model.getCompletedCount() ? DOM.button({id:"clear-completed", onClick: this.props.clearCompleted}, "Clear completed" ) : null;
+        var clearButton = model.getCompletedCount() ? DOM.button({id:"clear-completed", onClick: this.clearCompleted}, "Clear completed" ) : null;
         return DOM.footer({id:"footer"},
             DOM.span({id:"todo-count"},
-                DOM.strong(null, getCountText(this.props.model))
+                DOM.strong(null, getCountText())
             ),
             DOM.ul({id:"filters"},
                 DOM.li(null,
@@ -28,7 +34,7 @@ var Footer = React.createClass({displayName: "Footer",
 
 module.exports = Footer;
 
-function getCountText(model){
+function getCountText(){
     var count = model.getActiveCount();
     return count === 1 ? "1 item left" : count + " items left";
 }
