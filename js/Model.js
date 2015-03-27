@@ -37,59 +37,38 @@ Model.prototype.addChangeListener = function (callback) {
             
 var model = module.exports = new Model();
 
-Dispatcher.register(function(action){
-    switch (action.actionType) {
-        case ActionTypes.ADD:
-            handlers.add(action.payload);
-            model.emit('change');
-            break;
-        case ActionTypes.REMOVE:
-            handlers.remove(action.payload);
-            model.emit('change');
-            break;
-        case ActionTypes.CLEAR:
-            handlers.clearCompleted();
-            model.emit('change');
-            break;
-        case ActionTypes.TOGGLE:
-            handlers.toggle(action.payload);
-            model.emit('change');
-            break;
-        case ActionTypes.TOGGLE_ALL:
-            handlers.toggleAll(action.payload);
-            model.emit('change');
-            break;
-        case ActionTypes.REFRESH:
-            model.emit('change');
-            break;
-    }
-})
+Dispatcher.on(ActionTypes.ADD, function(itemName){
+    todos.push({
+        id: uuid.v1(),
+        name: itemName,
+        completed: false
+    });
+    model.emit('change');
+});
 
-var handlers = {
-    add: function(todo){
-        todos.push({
-            id: uuid.v1(),
-            name: todo,
-            completed: false
-        });
-    },
-    remove: function(item){
-        todos = todos.filter(function(todo){
-            return todo.id !== item.id;
-        });
-    },
-    clearCompleted: function(){
-        todos = todos.filter(function(todo){
-            return !todo.completed;
-        });
-    },
-    toggle: function(item){
-        item.completed = !item.completed;
-    },
-    toggleAll: function(completed){
-        todos.forEach(function(todo){
-            todo.completed = completed;
-        });
+Dispatcher.on(ActionTypes.REMOVE, function(item){
+    todos = todos.filter(function(todo){
+        return todo.id !== item.id;
+    });
+    model.emit('change');
+});
 
-    }
-};
+Dispatcher.on(ActionTypes.CLEAR, function(){
+    todos = todos.filter(function(todo){
+        return !todo.completed;
+    });   
+    model.emit('change');
+});
+
+Dispatcher.on(ActionTypes.TOGGLE, function(item){
+    item.completed = !item.completed;   
+    model.emit('change');
+});
+
+Dispatcher.on(ActionTypes.TOGGLE_ALL, function(isCompleted){
+    todos.forEach(function(todo){
+        todo.completed = isCompleted;
+    });
+    model.emit('change');
+});
+

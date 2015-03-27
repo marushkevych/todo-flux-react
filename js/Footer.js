@@ -7,7 +7,7 @@ var DOM = React.DOM;
 
 var Footer = React.createClass({displayName: "Footer",
     clearCompleted: function(){
-        Dispatcher.dispatch(ActionTypes.CLEAR);
+        Dispatcher.emit(ActionTypes.CLEAR);
     },
     render: function() {
         var clearButton = model.getCompletedCount() ? DOM.button({id:"clear-completed", onClick: this.clearCompleted}, "Clear completed" ) : null;

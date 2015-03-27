@@ -12,7 +12,7 @@ var TodoList = React.createClass({displayName: "TodoList",
 
     toggleAll: function(event){
         var checked = event.target.checked;
-        Dispatcher.dispatch(ActionTypes.TOGGLE_ALL, checked);
+        Dispatcher.emit(ActionTypes.TOGGLE_ALL, checked);
     },
 
     getInitialState: function(){

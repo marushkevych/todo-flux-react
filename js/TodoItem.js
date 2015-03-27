@@ -12,10 +12,10 @@ module.exports = React.createClass({displayName: "TodoItem",
         return {editing:false};
     },
     onToggle: function(){
-        Dispatcher.dispatch(ActionTypes.TOGGLE, this.props.item);
+        Dispatcher.emit(ActionTypes.TOGGLE, this.props.item);
     },
     onDestroy: function(){
-        Dispatcher.dispatch(ActionTypes.REMOVE, this.props.item);
+        Dispatcher.emit(ActionTypes.REMOVE, this.props.item);
     },
     handleEdit: function(){
         var node = this.refs.editField.getDOMNode();

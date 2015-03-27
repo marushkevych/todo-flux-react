@@ -1,7 +1,7 @@
 var TodoApp = React.createFactory(require('./TodoApp'));
 
 React.render(
-    React.createElement(TodoApp),
+    TodoApp(),
     document.getElementById('todoapp')
 );
 

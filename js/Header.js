@@ -8,7 +8,7 @@ var Header = React.createClass({displayName: "Header",
         if(event.keyCode === 13){
             var value = this.refs.newField.getDOMNode().value;
             if(value){
-                Dispatcher.dispatch(ActionTypes.ADD, value);
+                Dispatcher.emit(ActionTypes.ADD, value);
             }
             this.refs.newField.getDOMNode().value = '';
         }
